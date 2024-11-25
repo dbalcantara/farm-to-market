@@ -1,6 +1,7 @@
-import { newUser, login } from "./controllers/authRoutes.js";
-import { createProduct, getProduct, updateProduct } from "./controllers/productRoutes.js";
-import { createOrder, getOrders } from "./controllers/orderRoutes.js";
+import { newUser, login } from "./controllers/authController.js";
+import { createProduct, getProduct, updateProduct } from "./controllers/productController.js";
+import { createOrder, getOrders } from "./controllers/orderController.js";
+
 
 const app = (app) => {
     app.post('/register', newUser);
