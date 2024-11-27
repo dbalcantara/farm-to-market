@@ -4,14 +4,18 @@ import { createOrder, getOrders } from "./controllers/orderController.js";
 
 
 const app = (app) => {
+    // authentication
     app.post('/register', newUser);
     app.post('/login',  login);
-    app.post('/',  createProduct);
-    app.get('/', getProduct);
-    app.put('/:id', updateProduct);
-    app.post('/', createOrder);
-    app.get('/:email', getOrders);
-    
+
+    // products
+    app.post('/products', createProduct);
+    app.get('/products', getProduct);
+    app.put('/products/:id', updateProduct);
+
+    // orders
+    app.post('/orders', createOrder);
+    app.get('/orders', getOrders);
 }
     
 export default app;
