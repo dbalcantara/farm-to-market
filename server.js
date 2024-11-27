@@ -9,9 +9,19 @@ app.use(bodyParser.json());
 app.use('/api', router);
 
 
-mongoose.connect('mongodb://localhost:27017')
-  .then(() => {
-    console.log('MongoDB connected');
-    console.log(`Server is running on port 27017`);
-  })
-  .catch(err => console.log(err));
+// EDIT THE DATABASE NAME
+mongoose.connect('mongodb://localhost:27017/EDITTHIS') 
+   .then(() => {
+     console.log('MongoDB connected');
+   })
+   .catch(err => {
+     console.log('Error in MondoDB:', err);
+   });
+
+
+// START THE SERVER
+app.listen(3000, () => {
+  console.log('Server is running on http://localhost:3000');
+});
+
+export default app;
