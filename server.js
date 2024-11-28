@@ -9,14 +9,14 @@ app.use(bodyParser.json());
 app.use('/api', router);
 
 
-// EDIT THE DATABASE NAME
-mongoose.connect('mongodb://localhost:27017/EDITTHIS') 
+mongoose.connect('mongodb+srv://pcrumbines:Ze38tLpePB32Gjpr@project.iulyp.mongodb.net/?retryWrites=true&w=majority&appName=Project') 
    .then(() => {
      console.log('MongoDB connected');
    })
    .catch(err => {
-     console.log('Error in MondoDB:', err);
+     console.log('Error in MongoDB:', err);
    });
+
 
 
 // START THE SERVER
