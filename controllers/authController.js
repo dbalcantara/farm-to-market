@@ -1,37 +1,74 @@
-import User from '../mongoose/User.js';
+import mongoose from 'mongoose';
 
-const newUser =  async (req, res) => {
-  const { firstName, lastName, email, password } = req.body;
+//establish database connection via mongoose
+await mongoose.connect("mongodb+srv://scpepito:yTHW4UiE7G2%40gE.@cluster0.cscy5.mongodb.net/");
 
-  const newUser = new User({
-    firstName,
-    lastName,
-    email,
-    password,
-    userType: 'customer'
-  });
+// create User model with schema for user details
+const User = mongoose.model('users',{
+    firstName : { type: String, required: true },
+    middleName: { type: String, required: true },
+    lastName: { type: String, required: true },
+    userType: { type: String, default: "customer" },
+    email: { type: String, unique: true },
+    password: { type: String, required: true },
+    shoppingCart: [String], //array of product ids
+    pastPurchases: [String] //array of product ids
+});
 
-  try {
-    const savedUser = await newUser.save();
-    res.status(201).json(savedUser);
-  } catch (err) {
-    res.status(400).json(err);
-  }
+// add new user
+export const addUser = async (req, res) => {
+    try {
+        const { firstName, lastName, email, password } = req.body;
+        if (!(firstName && lastName && email && password)) {
+            return res.status(400).send({ inserted: false, message: "missing required fields" });
+        }
+        const newUser = new User(req.body);
+        await newUser.save(); // save new user to DB
+        res.status(201).send({ inserted: true, message: "user added successfully" });
+    } catch (error) {
+        res.status(500).send({ inserted: false, message: error.message }); // handle error
+    }
 };
 
-const login = async (req, res) => {
-  const { email, password } = req.body;
+// get user by email
+const getUserbyEmail = async (req, res) => {
+    const user = await User.findOne({ email: req.body.email });
+    res.send(user); // return user data
+}
 
-  const user = await User.findOne({ email });
-  if (!user) return res.status(400).json({ message: "User not found" });
+// update user details
+const updateUserDetails = async (req, res) => {
+    const userTemp = await User.findOne({ email: req.body.email });
+    if (!userTemp) {
+        res.send({ updated: false, message: "user not found" });
+        return; // stop if user not found
+    }
 
-  const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
+    // update user fields if provided in request
+    if (req.body.firstName) userTemp.firstName = req.body.firstName;
+    if (req.body.middleName) userTemp.middleName = req.body.middleName;
+    if (req.body.lastName) userTemp.lastName = req.body.lastName;
+    if (req.body.password) userTemp.password = req.body.password;
+    if (req.body.shoppingCart) userTemp.shoppingCart = req.body.shoppingCart;
+    if (req.body.pastPurchases) userTemp.pastPurchases = req.body.pastPurchases;
 
-  const token = jwt.sign({ id: user._id, userType: user.userType }, process.env.JWT_SECRET);
-  res.json({ token });
+    try {
+        await userTemp.save(); // save updated user
+        res.send({ updated: true, message: "user details updated successfully" });
+    } catch (error) {
+        res.status(500).send({ updated: false, message: "error updating user details" }); // handle error
+    }
+}
+
+// delete user by email
+const deleteUser = async (req, res) => {
+    const userDeletetion = await User.deleteOne({ email: req.body.email });
+    res.send(userDeletetion); // send result of deletion
 };
 
-export { newUser, login };
+// show all users
+const showAllUser = async (req, res) => {
+    res.send(await User.find({})); // fetch all users from DB
+}
 
-
+export { getUserbyEmail, updateUserDetails, deleteUser, showAllUser }
