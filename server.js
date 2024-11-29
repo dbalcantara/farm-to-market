@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 app.use('/api', router);
 
 
-mongoose.connect('mongodb+srv://pcrumbines:Ze38tLpePB32Gjpr@project.iulyp.mongodb.net/?retryWrites=true&w=majority&appName=Project') 
+mongoose.connect('mongodb+srv://eegarcia4:BKzML0eDeNytr001@project.iulyp.mongodb.net/project?retryWrites=true&w=majority&appName=Project') 
    .then(() => {
      console.log('MongoDB connected');
    })
