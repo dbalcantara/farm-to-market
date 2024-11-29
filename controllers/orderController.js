@@ -1,37 +1,67 @@
-import Order from '../mongoose/Order.js';
-import Product from '../mongoose/Product.js';
+import mongoose from "mongoose";
 
-const createOrder =  async (req, res) => {
-  const { productId, orderQuantity, email } = req.body;
+await mongoose.connect("mongodb+srv://scpepito:yTHW4UiE7G2%40gE.@cluster0.cscy5.mongodb.net/");
 
-  const product = await Product.findById(productId);
-  if (!product || product.quantity < orderQuantity) {
-    return res.status(400).json({ message: 'Insufficient stock' });
-  }
+// create Order model with schema for order details
+const Order = mongoose.model('order', {
+    transactionId: { type: String, unique: true, required: true },
+    productId: { type: String, required: true },
+    orderQuantity: { type: Number, required: true },
+    orderStatus: { type: Number, enum: [0, 1, 2], default: 0 },
+    email: { type: String, required: true },
+    dateOrdered: { type: Date, default: Date.now },
+    time: { type: String }
+});
 
-  const newOrder = new Order({
-    productId,
-    orderQuantity,
-    email,
-    orderStatus: 0, // Pending
-  });
-
-  try {
-    const savedOrder = await newOrder.save();
-    // Update product quantity
-    product.quantity -= orderQuantity;
-    await product.save();
-    res.status(201).json(savedOrder);
-  } catch (err) {
-    res.status(400).json(err);
-  }
+export const addOrder = async (req, res) => {
+    try {
+        const { transactionId, productId, orderQuantity, email } = req.body;
+        if (!(transactionId && productId && orderQuantity && email)) {
+            return res.status(400).send({ inserted: false, message: "missing required fields" });
+        }
+        const newOrder = new Order(req.body);
+        await newOrder.save(); // save new order to DB
+        res.status(201).send({ inserted: true, message: "order added successfully" });
+    } catch (error) {
+        res.status(500).send({ inserted: false, message: error.message }); // handle errors
+    }
 };
 
-// Get orders by user email (Customer)
-const getOrders = async (req, res) => {
-  const orders = await Order.find({ email: req.params.email });
-  res.json(orders);
-};
+export const getOrderByTransactionId = async (req, res) => {
+    // fetch order by transaction ID
+    res.send(await Order.findOne({ transactionId: req.body.transactionId }));
+}
 
-export { createOrder, getOrders };
+// only status and quantity can be updated
+export const updateOrder = async (req, res) => {
+    const orderTemp = await Order.findOne({ transactionId: req.body.transactionId });
+    if (!orderTemp) {
+        res.send({ updated: false, message: "order not found" });
+        return; // stop if order not found
+    }
+    
+    if (req.body.orderQuantity) orderTemp.orderQuantity = req.body.orderQuantity; // update quantity
+    if (req.body.orderStatus) orderTemp.orderStatus = req.body.orderStatus; // update status
 
+    try {
+        await orderTemp.save(); // save updated order
+        res.send({ updated: true, message: "order updated successfully" });
+    } catch (error) {
+        res.status(500).send({ updated: false, message: "error updating order" }); // handle errors
+    }
+}
+
+export const deleteOrder = async (req, res) => {
+    // delete order by transaction ID
+    res.send(await Order.deleteOne({ transactionId: req.body.transactionId }));
+}
+
+export const showAllOrderFromAUser = async (req, res) => {
+    // fetch all orders for a specific user by email
+    res.send(await Order.find({ email: req.body.email }));
+}
+
+export const showAllOrders = async (req, res) => {
+    // fetch all orders from the database
+    res.send(await Order.find({}));
+}
