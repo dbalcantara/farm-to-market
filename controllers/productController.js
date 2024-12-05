@@ -12,7 +12,7 @@ const Product = mongoose.model('Products',{
 });
 
 // add new product
-export const addNewProduct = async (req, res) => {
+const addNewProduct = async (req, res) => {
     try {
         const { productId, productName, productDescription, productType, productQuantity } = req.body;
         if (!(productId && productName && productDescription && productType && productQuantity)) {
@@ -63,4 +63,4 @@ const showAllProducts = async (req, res) => {
     res.send(await Product.find({})); // fetch all products from DB
 };
 
-export { getProductByID, updateProductDetails, deleteProduct, showAllProducts };
+export { addNewProduct, getProductByID, updateProductDetails, deleteProduct, showAllProducts };

@@ -4,12 +4,12 @@ import mongoose from 'mongoose';
 await mongoose.connect("mongodb+srv://scpepito:yTHW4UiE7G2%40gE.@cluster0.cscy5.mongodb.net/");
 
 // create User model with schema for user details
-const User = mongoose.model('users',{
+export const User = mongoose.model('users',{
     firstName : { type: String, required: true },
-    middleName: { type: String, required: true },
+    middleName: { type: String, required: false },
     lastName: { type: String, required: true },
     userType: { type: String, default: "customer" },
-    email: { type: String, unique: true },
+    email: { type: String, unique: true, required: true },
     password: { type: String, required: true },
     shoppingCart: [String], //array of product ids
     pastPurchases: [String] //array of product ids
@@ -31,13 +31,13 @@ export const addUser = async (req, res) => {
 };
 
 // get user by email
-const getUserbyEmail = async (req, res) => {
+export const getUserbyEmail = async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
     res.send(user); // return user data
 }
 
 // update user details
-const updateUserDetails = async (req, res) => {
+export const updateUserDetails = async (req, res) => {
     const userTemp = await User.findOne({ email: req.body.email });
     if (!userTemp) {
         res.send({ updated: false, message: "user not found" });
@@ -61,14 +61,12 @@ const updateUserDetails = async (req, res) => {
 }
 
 // delete user by email
-const deleteUser = async (req, res) => {
+export const deleteUser = async (req, res) => {
     const userDeletetion = await User.deleteOne({ email: req.body.email });
     res.send(userDeletetion); // send result of deletion
 };
 
 // show all users
-const showAllUser = async (req, res) => {
+export const showAllUser = async (req, res) => {
     res.send(await User.find({})); // fetch all users from DB
 }
-
-export { getUserbyEmail, updateUserDetails, deleteUser, showAllUser }
