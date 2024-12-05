@@ -1,0 +1,33 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #000; /* Black background */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Darker shadow for a more monochrome effect */
+  }
+  
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff; /* White text for logo */
+  }
+  
+  .nav-buttons .btn {
+    margin-left: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #fff; /* White text for buttons */
+  }
+  
+  .nav-buttons .sign-up {
+    background-color: #333; /* Dark gray background for sign-up button */
+  }
+  
+  .nav-buttons .log-in {
+    background-color: #555; /* Lighter gray background for log-in button */
+  }
+  
