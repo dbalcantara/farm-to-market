@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Header.css';
 
 const Header = () => {
@@ -7,8 +8,12 @@ const Header = () => {
       {/* <img src = ""></img>  - edit logo */} 
       <div className="logo">Farm to Table</div>
       <nav className="nav-buttons">
-        <button className="btn sign-up">Sign Up</button>
-        <button className="btn log-in">Log In</button>
+        <Link to="/signup">
+          <button className="btn sign-up">Sign Up</button>
+        </Link>
+        <Link to="/login">
+          <button className="btn log-in">Log In</button>
+        </Link>
       </nav>
     </header>
   );
