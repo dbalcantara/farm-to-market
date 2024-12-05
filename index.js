@@ -202,6 +202,54 @@ async function runTests() {
         // DELETE: Delete One Order
         await deleteOneOrder("T001");
 
+        const validUser = {
+            firstName: "Kusuo",
+            lastName: "Saiki",
+            email: "saikik@gmail.com",
+            password: "i'mapsychic",
+            confirmPassword: "i'mapsychic"
+        };
+
+        const invalidUser = {
+            firstName: "Kusuo",
+            lastName: "Saiki",
+            email: "invalid-email",
+            password: "123",
+            confirmPassword: "456" // Passwords do not match
+        };
+
+        // 1. Test Signup
+        console.log("\n--- Testing Signup ---");
+        const signupResponse = await sendPostRequest('/signup', validUser);
+        console.log("Signup Response (Valid):", signupResponse);
+
+        const invalidSignupResponse = await sendPostRequest('/signup', invalidUser);
+        console.log("Signup Response (Invalid):", invalidSignupResponse);
+
+        // 2. Test Login
+        console.log("\n--- Testing Login ---");
+        const loginResponse = await sendPostRequest('/login', {
+            email: validUser.email,
+            password: validUser.password
+        });
+        console.log("Login Response (Valid):", loginResponse);
+
+        const invalidLoginResponse = await sendPostRequest('/login', {
+            email: validUser.email,
+            password: "wrongpassword"
+        });
+        console.log("Login Response (Invalid Password):", invalidLoginResponse);
+
+        const nonExistentLoginResponse = await sendPostRequest('/login', {
+            email: "nonexistent@gmail.com",
+            password: "somepassword"
+        });
+        console.log("Login Response (Non-existent User):", nonExistentLoginResponse);
+
+        // 3. Test Logout
+        console.log("\n--- Testing Logout ---");
+        const logoutResponse = await sendPostRequest('/logout', {});
+        console.log("Logout Response:", logoutResponse);
     } catch (error) {
         console.error("Error during test case execution:", error.message);
     }

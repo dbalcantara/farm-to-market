@@ -1,14 +1,7 @@
-import {
-    addUser, getUserbyEmail, updateUserDetails, deleteUser, showAllUser
-} from "./controllers/authController.js";
-
-import {
-    addNewProduct, getProductByID, updateProductDetails, deleteProduct, showAllProducts
-} from "./controllers/productController.js";
-
-import {
-    addOrder, getOrderByTransactionId, updateOrder, deleteOrder, showAllOrderFromAUser, showAllOrders
-} from "./controllers/orderController.js";
+import {addUser, getUserbyEmail, updateUserDetails, deleteUser, showAllUser} from "./controllers/authController.js";
+import {addNewProduct, getProductByID, updateProductDetails, deleteProduct, showAllProducts} from "./controllers/productController.js";
+import {addOrder, getOrderByTransactionId, updateOrder, deleteOrder, showAllOrderFromAUser, showAllOrders} from "./controllers/orderController.js";
+import {signup, login, logout, addToCart, removeFromCart, checkout, cancelOrder} from "./actions/customer.js";
 
 const router = (app) => {
     // POST routes (actual API functionality)
@@ -30,6 +23,15 @@ const router = (app) => {
     app.post('/delete-order', deleteOrder);
     app.post('/show-orders-of-user', showAllOrderFromAUser);
     app.post('/show-all-orders', showAllOrders);
+
+    app.post('/signup', signup);
+    app.post('/login', login);
+    app.post('/logout', logout);
+
+    app.post('/add-to-cart', addToCart);
+    app.post('/remove-from-cart', removeFromCart);
+    app.post('/checkout', checkout);
+    app.post('/cancel-order', cancelOrder);
 };
 
 export default router;

@@ -3,7 +3,7 @@ import needle from "needle";
 const baseURL = 'http://localhost:27107';
 
 // add new product
-async function AddNewProduct(productData) {
+export async function AddNewProduct(productData) {
     try {
         const response = await needle('post', `${baseURL}/add-product`, productData);
         console.log('Add Product Response:', response.body); // log response
@@ -14,7 +14,7 @@ async function AddNewProduct(productData) {
 }
 
 // get product by id
-async function GetProductByID(productId) {
+export async function GetProductByID(productId) {
     try {
         const response = await needle('post', `${baseURL}/get-product-by-id`, { productId });
         console.log('Get Product by ID Response:', response.body); // log response
@@ -25,7 +25,7 @@ async function GetProductByID(productId) {
 }
 
 // update product details
-async function UpdateProductDetails(productId, updatedData) {
+export async function UpdateProductDetails(productId, updatedData) {
     try {
         const response = await needle('post', `${baseURL}/update-product`, { ...updatedData, productId });
         console.log('Update Product Response:', response.body); // log response
@@ -36,7 +36,7 @@ async function UpdateProductDetails(productId, updatedData) {
 }
 
 // delete product
-async function DeleteProduct(productId) {
+export async function DeleteProduct(productId) {
     try {
         const response = await needle('post', `${baseURL}/delete-product`, { productId });
         console.log('Delete Product Response:', response.body); // log response
@@ -47,7 +47,7 @@ async function DeleteProduct(productId) {
 }
 
 // get all products
-async function GetAllProducts() {
+export async function GetAllProducts() {
     try {
         const response = await needle('post', `${baseURL}/show-all-product`);
         console.log('Product List:', response.body); // log response
@@ -56,5 +56,3 @@ async function GetAllProducts() {
         console.error('Error showing all products:', error.message); // log error
     }
 }
-
-export { AddNewProduct, GetProductByID, UpdateProductDetails, DeleteProduct, GetAllProducts };

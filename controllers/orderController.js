@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 await mongoose.connect("mongodb+srv://scpepito:yTHW4UiE7G2%40gE.@cluster0.cscy5.mongodb.net/");
 
 // create Order model with schema for order details
-const Order = mongoose.model('order', {
+export const Order = mongoose.model('order', {
     transactionId: { type: String, unique: true, required: true },
     productId: { type: String, required: true },
     orderQuantity: { type: Number, required: true },
