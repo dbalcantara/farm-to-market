@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 await mongoose.connect("mongodb+srv://scpepito:yTHW4UiE7G2%40gE.@cluster0.cscy5.mongodb.net/");
 
 // create Product model with schema for product details
-const Product = mongoose.model('Products',{
+export const Product = mongoose.model('Products',{
     productId: { type: String, required: true, unique: true },
     productName: { type: String, required: true },
     productDescription: { type: String, required: true },
@@ -12,7 +12,7 @@ const Product = mongoose.model('Products',{
 });
 
 // add new product
-const addNewProduct = async (req, res) => {
+export const addNewProduct = async (req, res) => {
     try {
         const { productId, productName, productDescription, productType, productQuantity } = req.body;
         if (!(productId && productName && productDescription && productType && productQuantity)) {
@@ -27,13 +27,13 @@ const addNewProduct = async (req, res) => {
 };
 
 // get product by productId
-const getProductByID = async (req, res) => {
+export const getProductByID = async (req, res) => {
     const product = await Product.findOne({ productId: req.body.productId });
     res.send(product); // return product details
 };
 
 // update product details
-const updateProductDetails = async (req, res) => {
+export const updateProductDetails = async (req, res) => {
     try {
         const product = await Product.findOne({ productId: req.body.productId });
         if (product == null) {
@@ -53,14 +53,12 @@ const updateProductDetails = async (req, res) => {
 };
 
 // delete product by productId
-const deleteProduct = async (req, res) => {
+export const deleteProduct = async (req, res) => {
     const productDeletetion = await Product.deleteOne({ productId: req.body.productId });
     res.send(productDeletetion); // send result of deletion
 };
 
 // show all products
-const showAllProducts = async (req, res) => {
+export const showAllProducts = async (req, res) => {
     res.send(await Product.find({})); // fetch all products from DB
 };
-
-export { addNewProduct, getProductByID, updateProductDetails, deleteProduct, showAllProducts };
