@@ -6,7 +6,7 @@ const Header = () => {
   return (
     <header className="header">
       {/* <img src = ""></img>  - edit logo */} 
-      <div className="logo">Farm to Table</div>
+      <Link to="/" className="logo">Farm to Table</Link>
       <nav className="nav-buttons">
         <Link to="/signup">
           <button className="btn sign-up">Sign Up</button>
