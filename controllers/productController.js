@@ -8,14 +8,17 @@ export const Product = mongoose.model('Products',{
     productName: { type: String, required: true },
     productDescription: { type: String, required: true },
     productType: { type: Number, enum: [1, 2], required: true }, 
-    productQuantity: { type: Number, required: true }
+    productCategory: { type: String, enum: ["Fruits", "Vegetables", "Eggs", "Chicken"]},
+    productPrice: { type: Number, required: true},
+    productQuantity: { type: Number, required: true },
+    productImage: { type: String, required: true }
 });
 
 // add new product
 export const addNewProduct = async (req, res) => {
     try {
-        const { productId, productName, productDescription, productType, productQuantity } = req.body;
-        if (!(productId && productName && productDescription && productType && productQuantity)) {
+        const { productId, productName, productDescription, productType, productCategory, productPrice, productQuantity, productImage } = req.body;
+        if (!(productId && productName && productDescription && productType && productCategory && productPrice && productQuantity && productImage )) {
             return res.status(400).send({ inserted: false, message: "missing required fields" });
         }
         const product = new Product(req.body);
@@ -44,7 +47,10 @@ export const updateProductDetails = async (req, res) => {
         if (req.body.productName) product.productName = req.body.productName;
         if (req.body.productDescription) product.productDescription = req.body.productDescription;
         if (req.body.productType) product.productType = req.body.productType;
+        if (req.body.productCategory) product.productCategory = req.body.productCategory;
+        if (req.body.productPrice) product.productPrice = req.body.productPrice;
         if (req.body.productQuantity) product.productQuantity = req.body.productQuantity;
+        if (req.body.productImage) product.productImage = req.body.productImage;
         
         res.json(await product.save()); // save updated product details
     } catch (err) {
