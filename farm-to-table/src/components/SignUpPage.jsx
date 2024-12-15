@@ -131,7 +131,7 @@ const SignUpPage = () => {
         </form>
         {message && <p className="message">{message}</p>}
         <p className="login-link">
-          Already registered? <Link to="/login">Log in</Link>
+          Already registered? <Link to="/">Log in</Link>
         </p>
       </div>
       <div className="signup-content-container">
