@@ -17,15 +17,32 @@ export const Product = mongoose.model('Products',{
 // add new product
 export const addNewProduct = async (req, res) => {
     try {
-        const { productId, productName, productDescription, productType, productCategory, productPrice, productQuantity, productImage } = req.body;
-        if (!(productId && productName && productDescription && productType && productCategory && productPrice && productQuantity && productImage )) {
-            return res.status(400).send({ inserted: false, message: "missing required fields" });
+        const { 
+            productId, 
+            productName, 
+            productDescription, 
+            productType, 
+            productCategory, 
+            productPrice, 
+            productQuantity, 
+            productImage 
+        } = req.body;
+
+        if (!(productId && productName && productDescription && productType && productCategory && productPrice && productQuantity && productImage)) {
+            return res.status(400).send({ inserted: false, message: "Missing required fields" });
         }
+
+        // already existing?
+        const existingProduct = await Product.findOne({ productId }); 
+        if (existingProduct) {
+            return res.status(409).send({ inserted: false, message: "Product already exists" });
+        }
+        // Save the new product
         const product = new Product(req.body);
-        await product.save(); // save product to DB
-        res.status(201).send({ inserted: true, message: "product added successfully" });
+        await product.save();
+        res.status(201).send({ inserted: true, message: "Product added successfully" });
     } catch (error) {
-        res.status(500).send({ inserted: false, message: error.message }); // handle error
+        res.status(500).send({ inserted: false, message: error.message }); 
     }
 };
 

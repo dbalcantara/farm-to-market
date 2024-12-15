@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './LogInPage.css';
 
 const LogInPage = () => {
@@ -7,6 +7,7 @@ const LogInPage = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate(); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,18 +23,18 @@ const LogInPage = () => {
         body: JSON.stringify({ email, password }),
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Login failed');
+      const data = await response.json();
+
+      if (!data.status) {
+        throw new Error(data.message || 'Login failed');
       }
 
-      const data = await response.json();
       console.log('Login successful:', data);
 
-      // Redirect or handle successful login
-      alert('Login successful!'); // Example action
+      alert('Login successful!');
+      navigate('/shop'); 
     } catch (err) {
-      setError(err.message);
+      setError(err.message); 
     } finally {
       setLoading(false);
     }
