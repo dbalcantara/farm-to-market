@@ -1,6 +1,6 @@
 import needle from "needle";
 
-const baseURL = 'http://localhost:27107'; // server URL
+const baseURL = 'http://localhost:3001'; // server URL
 
 // add new order
 export const addOrder = async (orderData) => {
