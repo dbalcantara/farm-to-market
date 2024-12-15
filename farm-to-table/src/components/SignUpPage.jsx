@@ -12,7 +12,7 @@ const SignUpPage = () => {
   });
 
   const [message, setMessage] = useState('');
-  const navigate = useNavigate(); // Initialize navigate function
+  const navigate = useNavigate(); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,12 +21,6 @@ const SignUpPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Check if passwords match
-    if (formData.password !== formData.confirmPassword) {
-      setMessage('Passwords do not match!');
-      return;
-    }
 
     try {
       const response = await fetch('http://localhost:3001/signup', {
@@ -37,15 +31,16 @@ const SignUpPage = () => {
 
       const result = await response.json();
 
-      if (response.ok) {
-        setMessage('User signed up successfully!');
-        navigate('/shop'); // Redirect to shop page
-      } else {
-        setMessage(result.message || 'An error occurred.');
-      }
+      if (!result.ok) {
+        setMessage(result.message || 'Signup Failed.');
+      } 
+      setMessage('User signed up successfully!');
+      navigate('/login'); 
+      
     } catch (error) {
       setMessage('Failed to connect to the server.');
     }
+    
   };
 
   return (
