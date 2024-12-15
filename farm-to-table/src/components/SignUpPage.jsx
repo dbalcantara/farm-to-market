@@ -31,15 +31,17 @@ const SignUpPage = () => {
 
       const result = await response.json();
 
-      if (!result.ok) {
-        setMessage(result.message || 'Signup Failed.');
-      } 
+    if (result.ok) {
       setMessage('User signed up successfully!');
-      navigate('/login'); 
-      
-    } catch (error) {
-      setMessage('Failed to connect to the server.');
+      navigate('/');
+    } else {
+      setMessage(result.message || 'An error occurred.');
     }
+  } catch (err) {
+    setError(err.message);
+  } finally {
+    setLoading(false);
+  }
     
   };
 
