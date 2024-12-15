@@ -13,25 +13,25 @@ export const signup = async (req, res) => {
         const { firstName, lastName, email, password, confirmPassword } = req.body;
 
         if (!(firstName && lastName && email && password && confirmPassword)) {
-            res.send({status: false, message: "Please provide all required fields"});
-            return;
+            return res.send({status: false, message: "Please provide all required fields"});
+            
         }
     
         if (!isValidEmail(email)) {
-            res.send({ status: false, message: "Invalid email address"});
-            return;
+            return res.send({ status: false, message: "Invalid email address"});
+            
         }
     
         const existingUser = await User.findOne({email: email});
     
         if (existingUser) {
-            res.send({ status: false, message: "User with this email already exists"});
-            return;
+            return res.send({ status: false, message: "User with this email already exists"});
+            
         }
     
         if (password !== confirmPassword) {
-            res.send({ status: false, message: "Passwords do not match"});
-            return;
+            return res.send({ status: false, message: "Passwords do not match"});
+            
         }
     
         delete req.body.confirmPassword;
