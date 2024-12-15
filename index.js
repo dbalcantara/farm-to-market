@@ -1,10 +1,12 @@
 import express from 'express';
 import router from './router.js';
 import http from 'http';
+import cors from 'cors'
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors());
 
 // default route to verify server is running
 app.get('/', (req, res) => {
@@ -21,7 +23,7 @@ app.use((err, req, res, next) => {
 });
 
 // start server
-const PORT = 27107;
+const PORT = 3001;
 app.listen(PORT, async () => {
     console.log(`Database Server Started at Port ${PORT}`);
 

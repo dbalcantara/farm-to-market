@@ -4,25 +4,36 @@ import {addOrder, getOrderByTransactionId, updateOrder, deleteOrder, showAllOrde
 import {signup, login, logout, addToCart, removeFromCart, checkout, cancelOrder} from "./actions/customer.js";
 
 const router = (app) => {
+
+    // Allow Cross Origin Resource Sharing
+    app.use((req, res, next) => {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Credentials', 'true');
+        res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE');
+        res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
+        next();
+    })
+
     // POST routes (actual API functionality)
     app.post('/add-user', addUser);
     app.post('/get-user-by-email', getUserbyEmail);
     app.post('/update-user', updateUserDetails);
     app.post('/delete-user', deleteUser);
-    app.post('/show-all-users', showAllUser);
+    //app.post('/show-all-users', showAllUser);
+    app.get('/show-all-users', showAllUser); 
 
     app.post('/add-product', addNewProduct);
     app.post('/get-product-by-id', getProductByID);
     app.post('/update-product', updateProductDetails);
     app.post('/delete-product', deleteProduct);
-    app.post('/show-all-products', showAllProducts); 
+    app.get('/show-all-products', showAllProducts); 
     
     app.post('/add-order', addOrder);
     app.post('/get-order-by-transaction-id', getOrderByTransactionId);
     app.post('/update-order', updateOrder);
     app.post('/delete-order', deleteOrder);
-    app.post('/show-orders-of-user', showAllOrderFromAUser);
-    app.post('/show-all-orders', showAllOrders);
+    app.get('/show-orders-of-user', showAllOrderFromAUser);
+    app.get('/show-all-orders', showAllOrders);
 
     app.post('/signup', signup);
     app.post('/login', login);

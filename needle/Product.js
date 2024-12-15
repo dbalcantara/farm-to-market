@@ -1,15 +1,21 @@
 import needle from "needle";
 
-const baseURL = 'http://localhost:27107';
+const baseURL = 'http://localhost:3001';
 
 // add new product
 export async function AddNewProduct(productData) {
     try {
         const response = await needle('post', `${baseURL}/add-product`, productData);
-        console.log('Add Product Response:', response.body); // log response
-        return response.body; // return response
+        if (response.statusCode === 201) {
+            console.log('Product added successfully:', response.body);
+            return response.body; 
+        } else {
+            console.error('Failed to add product:', response.body.message || response.body);
+            return { inserted: false, message: 'Failed to add product.' }; 
+        }
     } catch (error) {
-        console.error('Error adding product:', error.message); // log error
+        console.error('Error adding product:', error.message); 
+        return { inserted: false, message: error.message }; 
     }
 }
 

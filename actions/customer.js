@@ -13,25 +13,25 @@ export const signup = async (req, res) => {
         const { firstName, lastName, email, password, confirmPassword } = req.body;
 
         if (!(firstName && lastName && email && password && confirmPassword)) {
-            res.send({status: false, message: "Please provide all required fields"});
-            return;
+            return res.send({status: false, message: "Please provide all required fields"});
+            
         }
     
         if (!isValidEmail(email)) {
-            res.send({ status: false, message: "Invalid email address"});
-            return;
+            return res.send({ status: false, message: "Invalid email address"});
+            
         }
     
         const existingUser = await User.findOne({email: email});
     
         if (existingUser) {
-            res.send({ status: false, message: "User with this email already exists"});
-            return;
+            return res.send({ status: false, message: "User with this email already exists"});
+            
         }
     
         if (password !== confirmPassword) {
-            res.send({ status: false, message: "Passwords do not match"});
-            return;
+            return res.send({ status: false, message: "Passwords do not match"});
+            
         }
     
         delete req.body.confirmPassword;
@@ -52,29 +52,25 @@ export const login = async (req, res) => {
     try {
         const { email, password } = req.body;
         if (!isValidEmail(email)) {
-            res.send({ status: false, message: "Invalid email address"});
-            return;
+            return res.status(400).json({ status: false, message: "Invalid email address"});
         }
-    
         const existingUser = await User.findOne({email: email});
-        
+        console.log(existingUser);
         if (!existingUser) {
-            res.send({ status: false, message: "User with this email does not exist"});
-            return;
+            return res.status(400).json({ status: false, message: "User with this email does not exist"});
         }
-    
+        // 
         const isPasswordMatch = await comparePassword(password, existingUser.password);
-    
         if (!isPasswordMatch) {
-            res.send({ status: false, message: "Invalid password"});
-            return;
+            return res.status(400).json({ status: false, message: "Invalid password" });
         }
-    
-        generateToken(existingUser._id, res); // Generate token for user
-        res.send({ status: true, message: "User logged in successfully"});
-
+        // token for the user
+        generateToken(existingUser._id, res);
+        // success
+        return res.status(200).json({ status: true, message: "User logged in successfully" });
     } catch (error) {
-        res.status(500).json({ status: false, message: "Internal server error" });
+        // Internal server error
+        return res.status(500).json({ status: false, message: "Internal server error" });
     }
 }
 

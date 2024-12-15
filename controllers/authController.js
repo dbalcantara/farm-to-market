@@ -8,7 +8,7 @@ export const User = mongoose.model('users',{
     firstName : { type: String, required: true },
     middleName: { type: String, required: false },
     lastName: { type: String, required: true },
-    userType: { type: String, default: "customer" },
+    userType: { type: String, enum: ['customer', 'merchant'], default: "customer" },
     email: { type: String, unique: true, required: true },
     password: { type: String, required: true },
     shoppingCart: [{

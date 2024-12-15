@@ -1,0 +1,164 @@
+@font-face {
+  font-family: "Alte Haas Grotesk Bold";
+  src: url(../assets/ALTEHAASGROTESKBOLD.TTF) format("truetype");
+}
+
+@font-face {
+  font-family: "Alte Haas Grotesk Regular";
+  src: url(../assets/ALTEHAASGROTESKREGULAR.TTF) format("truetype");
+}
+
+@font-face {
+  font-family: "Mazius Display Extra Italic Bold";
+  src: url(../assets/MAZIUSDISPLAY-EXTRAITALICBOLD.OTF) format("truetype");
+}
+
+/* Background */
+.signup-background {
+  background-image: url("../assets/1.png"); 
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Left Section: Signup Form */
+.signup-container {
+  background-color: rgba(62, 76, 52, 0.76);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #fff;
+  padding: 2.5rem;
+  font-family: "Alte Haas Grotesk Bold", sans-serif;
+  height: 700px;
+  border-radius: 50px;
+  border: 1px solid #e6c200;
+  box-shadow: 0 4px 40px rgb(0, 0, 0); 
+  width: 550px;
+  max-width: 600px;
+  margin-left: 12rem;
+}
+
+.signup-container h1 {
+  color: #ffd900;
+  font-size: 4rem;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  text-align: center;
+  font-family: "Alte Haas Grotesk Bold", sans-serif;
+}
+
+.signup-welcome-message {
+  color: #ffffff;
+  font-size: 1.2rem;
+  margin-bottom: 40px;
+  margin-left: 10px;
+  font-family: "Alte Haas Grotesk Regular", sans-serif;
+}
+
+.signup-prompt h3 {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-left: 10px;  
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+  font-family: "Alte Haas Grotesk Bold", sans-serif;
+}
+
+.signup-field {
+  display: flex;
+  align-items: center;
+}
+
+.signup-input-field {
+  flex: 1;
+  background-color: #718658;
+  border: 1px solid #fffb00;
+  box-shadow: 0 4px 40px rgba(0, 0, 0, 0.274); 
+  border-radius: 20px;
+  color: #fff;
+  padding: 0.8rem 1rem;
+  height: 1rem;
+  font-size: 1rem;
+  margin-bottom: -0.5rem;
+  
+}
+
+.signup-input-field::placeholder {
+  color: #dddddde8;
+}
+
+.btn.sign-up {
+  background-color: #ffd700;
+  color: #333;
+  border: 1px solid #000000;
+  box-shadow: 0 4px 40px rgba(0, 0, 0, 0.349); 
+  padding: 0.75rem;
+  border-radius: 30px;
+  text-transform: uppercase;
+  font-size: 1.1rem;
+  cursor: pointer;
+  width: 30%; 
+  transition: background-color 0.3s;
+  font-family: "Alte Haas Grotesk Bold", sans-serif;
+  display: block; 
+  margin: 1rem auto; 
+  text-align: center; 
+  margin-top: 40px;
+}
+
+
+.btn.sign-up:hover {
+  background-color: #e6c200;
+}
+
+.login-link {
+  color: #ffffff;
+  font-size: 1.2rem;
+  margin-top: 1.5rem;
+  text-align: center;
+  font-family: "Alte Haas Grotesk Regular", sans-serif;
+}
+
+.login-link a {
+  color: #ffea72;
+  text-decoration: none;
+  font-family: "Alte Haas Grotesk Bold", sans-serif;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+/* Right Section: Company Information */
+.signup-content-container {
+  max-width: 800px;
+  margin-right: 12rem;
+  color: #ffd700;
+}
+
+/* Right Section: Company Information */
+.signup-content-container {
+  max-width: 800px;
+  margin-right: 12rem;
+  color: #ffd700;
+}
+
+.signup-content-container h2 {
+  font-size: 7.9rem;
+  font-family: "Mazius Display Extra Italic Bold";
+  color: #ffd700;
+  margin-bottom: -0.5rem;
+}
+
+.signup-content-container p {
+  font-size: 1.2rem;
+  line-height: 1.1;
+  color: #ffffff;
+  text-justify: newspaper;
+  margin-bottom: 35rem;
+  font-family: "Alte Haas Grotesk Regular", sans-serif;
+}

@@ -8,21 +8,41 @@ export const Product = mongoose.model('Products',{
     productName: { type: String, required: true },
     productDescription: { type: String, required: true },
     productType: { type: Number, enum: [1, 2], required: true }, 
-    productQuantity: { type: Number, required: true }
+    productCategory: { type: String, enum: ["Fruits", "Vegetables", "Eggs", "Chicken"]},
+    productPrice: { type: Number, required: true},
+    productQuantity: { type: Number, required: true },
+    productImage: { type: String, required: true }
 });
 
 // add new product
 export const addNewProduct = async (req, res) => {
     try {
-        const { productId, productName, productDescription, productType, productQuantity } = req.body;
-        if (!(productId && productName && productDescription && productType && productQuantity)) {
-            return res.status(400).send({ inserted: false, message: "missing required fields" });
+        const { 
+            productId, 
+            productName, 
+            productDescription, 
+            productType, 
+            productCategory, 
+            productPrice, 
+            productQuantity, 
+            productImage 
+        } = req.body;
+
+        if (!(productId && productName && productDescription && productType && productCategory && productPrice && productQuantity && productImage)) {
+            return res.status(400).send({ inserted: false, message: "Missing required fields" });
         }
+
+        // already existing?
+        const existingProduct = await Product.findOne({ productId }); 
+        if (existingProduct) {
+            return res.status(409).send({ inserted: false, message: "Product already exists" });
+        }
+        // Save the new product
         const product = new Product(req.body);
-        await product.save(); // save product to DB
-        res.status(201).send({ inserted: true, message: "product added successfully" });
+        await product.save();
+        res.status(201).send({ inserted: true, message: "Product added successfully" });
     } catch (error) {
-        res.status(500).send({ inserted: false, message: error.message }); // handle error
+        res.status(500).send({ inserted: false, message: error.message }); 
     }
 };
 
@@ -44,7 +64,10 @@ export const updateProductDetails = async (req, res) => {
         if (req.body.productName) product.productName = req.body.productName;
         if (req.body.productDescription) product.productDescription = req.body.productDescription;
         if (req.body.productType) product.productType = req.body.productType;
+        if (req.body.productCategory) product.productCategory = req.body.productCategory;
+        if (req.body.productPrice) product.productPrice = req.body.productPrice;
         if (req.body.productQuantity) product.productQuantity = req.body.productQuantity;
+        if (req.body.productImage) product.productImage = req.body.productImage;
         
         res.json(await product.save()); // save updated product details
     } catch (err) {
