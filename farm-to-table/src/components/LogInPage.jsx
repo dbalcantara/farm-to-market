@@ -38,18 +38,18 @@ const LogInPage = () => {
   };
 
   return (
-    <div className="background">
+    <div className="login-background">
 
       {/* Left Section: Login Form */}
       <div className="login-container">
         <h1>LOGIN</h1>
-        <p className="welcome-message">Welcome back! Please log in to your account.</p>
+        <p className="login-welcome-message">Welcome back! Please log in to your account.</p>
         <form onSubmit={handleSubmit}>
-          <div className='prompt'>
+          <div className='login-prompt'>
             <h3>EMAIL</h3>
           </div>
           
-          <div className="field">
+          <div className="login-field">
             <span className="icon">@</span>
             <input
               type="email"
@@ -57,11 +57,13 @@ const LogInPage = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="input-field"
+              className="login-input-field"
             />
           </div>
+          <div className='login-prompt'>
           <h3>PASSWORD</h3>
-          <div className="field">
+          </div>
+          <div className="login-field">
             <span className="icon">🗝</span>
             <input
               type="password"
@@ -69,7 +71,7 @@ const LogInPage = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="input-field"
+              className="login-input-field"
             />
           </div>
           <button type="submit" className="btn login-btn" disabled={loading}>
@@ -83,9 +85,9 @@ const LogInPage = () => {
           Not yet registered? <Link to="/signup">Sign Up</Link>
         </p>
       </div>
-      <div className="content-container">
+      <div className="login-content-container">
         {/* Right Section: Company Description */}
-        <div className="company-info">
+        <div className="login-company-info">
           <h2>Cultivate & Co.</h2>
           <p>
             -----------------------------------------------------------------------------------------------------------
