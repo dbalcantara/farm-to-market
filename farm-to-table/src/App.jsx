@@ -8,6 +8,7 @@ import ShopPage from './components/ShopPage';
 import AdminDashboard from './components/AdminDashboard'
 import AdminUsers from './components/AdminUsers';
 import AdminProducts from './components/AdminProducts';
+import AdminOrders from './components/AdminOrders';
 import AdminSales from './components/AdminSales';
 
 const App = () => {
@@ -21,6 +22,7 @@ const App = () => {
           <Route path="/dashboard" element={<AdminDashboard />} />
           <Route path="/dashboard/users" element={<AdminUsers />} />
           <Route path="/dashboard/products" element={<AdminProducts />} />
+          <Route path="/dashboard/orders" element={<AdminOrders />} />
           <Route path="/dashboard/sales" element={<AdminSales />} />
           
         </Routes>

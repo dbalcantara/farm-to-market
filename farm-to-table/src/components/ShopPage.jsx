@@ -1,85 +1,199 @@
-import { useState } from 'react'
-import Header from './ShopHeader';
-import Card from './ShopCard';
-import { CartControllerProvider } from './ShopCartController';
-import Cart from './ShopCart';
-import './ShopPage.css';
-
-
-// Defined category structures with names, URLs, and unique IDs
-const menus = [
-  { name: "Products", url: "#", id: 1 },
-  // { name: "Gadgets", url: "#", id: 2 },
-  // { name: "Accessories", url: "#", id: 3 },
-];
-
-// Items for each category with details like ID, name, image, and price
-const Products = [
-  { id: 1, name: "Oven", img: "https://www.kyowa.com.ph/cdn/shop/files/KW-3320_3322_3325_3328A_grande.jpg?v=1700446651", price: "₱20000" },
-  { id: 2, name: "Rice Cooker", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmRSJETzUNFfCbSmtzH41VYh1xtG3iiXK2Mg&s", price: "₱5000" },
-  { id: 3, name: "Air Conditioner", img: "https://i5.walmartimages.com/seo/Midea-5-000-BTU-150-Sq-ft-Mechanical-Window-Air-Conditioner-White-MAW05M1WWT_e69841e8-f927-4348-a7b6-a0c695a83ad4.99578b1e45f02b7408bdd2bc61d5f818.jpeg", price: "₱8000" },
-  { id: 4, name: "Electric Fan", img: "https://ansons.ph/wp-content/uploads/2020/01/F-409LS.jpg", price: "₱1000" }
-];
-
-// const Gadgetitems = [
-//   { id: 5, name: "iPhone 16", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRefymJKP8pcBuNRxEbqZySRl-HdPvNChSJBw&s", price: "₱70000" },
-//   { id: 6, name: "RK61 Keyboard", img: "https://rkgamingstore.com/cdn/shop/products/RK61gamingkeyboard_1_9c7cfd02-7f06-4305-a1b8-d2de6bd8f289.jpg?v=1636444580", price: "₱6000" },
-//   { id: 7, name: "Macbook Air", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-g6ZWExP8t8Xl2bG0E4cM4mxjJYZ525ZrLQ&s", price: "₱100000" },
-//   { id: 8, name: "iPad 10", img: "https://accenthub.com.ph/wp-content/uploads/2023/05/Apple-10.9-Inches-iPad-10th-Gen-Wi-Fi-256GB-Silver-1.jpg", price: "₱40000" }
-// ];
-
-// const Accessoriesitems = [
-//   { id: 9, name: "Gentle Monster", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYCoLvymShSqBwq9blnF_YJR5rRbC8SZ_UjQ&s", price: "₱5000" },
-//   { id: 10, name: "Solasta Necklace", img: "https://img.perniaspopupshop.com/catalog/product/s/o/SOLA092133_1.jpg?impolicy=zoomimage", price: "₱3000" },
-//   { id: 11, name: "Pandora Bracelet", img: "https://pandora.lucerneluxe.com/cdn/shop/products/HIGH_CMYK_592453C00_CMYK_1024x1024@2x.jpg?v=1672819037", price: "₱5000" },
-//   { id: 12, name: "Casio Watch", img: "https://www.casio.com/content/dam/casio/product-info/locales/ph/en/timepiece/product/watch/C/CA/CA5/ca-500weg-1a/assets/CA-500WEG-1A.png", price: "₱4000" }
-// ];
-
+import React, { useEffect, useState } from "react";
+import Header from "./ShopHeader";
+import "./ShopPage.css";
 
 function ShopPage() {
-  const [selectedCategory, setSelectedCategory] = useState(1);  // Initial state for selected category
+  const [selectedCategory, setSelectedCategory] = useState(null); 
+  const [products, setProducts] = useState([]); 
+  const [categories, setCategories] = useState([]); 
+  const [cart, setCart] = useState([]); 
+  const [error, setError] = useState(null);
+  const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" }); 
 
-  // Renders the item cards based on the selected category  
-  const renderCategory = () => {
-    switch (selectedCategory) {
-      case 1:
-        return <Card items={Products} />;
-      // case 2:
-      //   return <Card items={Gadgetitems} />;
-      // case 3:
-      //   return <Card items={Accessoriesitems} />;
-      // default:
-        return null;
+  useEffect(() => {
+    const fetchProductsAndCategories = async () => {
+      try {
+        const response = await fetch("http://localhost:3001/show-all-products");
+        if (!response.ok) {
+          throw new Error("Failed to fetch products. Server error.");
+        }
+        const data = await response.json();
+
+        setProducts(data);
+
+        const uniqueCategories = [...new Set(data.map((item) => item.productCategory))];
+        setCategories(uniqueCategories);
+      } catch (err) {
+        setError(err.message);
+      }
+    };
+
+    fetchProductsAndCategories();
+  }, []);
+
+  // Add a product to the cart
+  // This can be transferred to ShopCart
+  const addToCart = (product) => {
+    const existingProduct = cart.find((item) => item.productId === product.productId);
+
+    if (existingProduct) {
+      setCart((prevCart) =>
+        prevCart.map((item) =>
+          item.productId === product.productId
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        )
+      );
+    } else {
+      setCart((prevCart) => [...prevCart, { ...product, quantity: 1 }]);
     }
   };
 
-  return (
-      <CartControllerProvider>
-        <div className="App">
-        <div className="header-container">
-           {/* Header with app title and navigation menu */}
-          <header>
-            <h1>Farm to Table</h1>
-          </header>
-          {/* Header component with menu items and category selection */}
-          <Header menus={menus} setSelectedCategory={setSelectedCategory} />
-        </div>
-        <div className="main-container">
-          <main>
-            {/* Renders the selected category's items */}
-            {renderCategory()}
-          </main>
-          <div className="cart">
-            <Cart
-              Products={Products}
-              // Gadgetitems={Gadgetitems}
-              // Accessoriesitems={Accessoriesitems}
+ 
+  const calculateTotalPrice = () =>
+    cart.reduce((total, item) => total + item.productPrice * item.quantity, 0);
+
+
+  const handlePlaceOrder = () => {
+    alert("Order placed successfully!");
+    setCart([]); 
+  };
+
+
+  const sortProducts = (key) => {
+    const direction =
+      sortConfig.key === key && sortConfig.direction === "asc" ? "desc" : "asc";
+
+    setSortConfig({ key, direction });
+
+    const sortedProducts = [...products].sort((a, b) => {
+      if (a[key] < b[key]) {
+        return direction === "asc" ? -1 : 1;
+      }
+      if (a[key] > b[key]) {
+        return direction === "asc" ? 1 : -1;
+      }
+      return 0;
+    });
+
+    setProducts(sortedProducts);
+  };
+
+  const renderProducts = () => {
+    if (error) {
+      return <p className="error-message">{error}</p>;
+    }
+
+    if (products.length === 0) {
+      return <p>Loading products...</p>; 
+    }
+
+
+    const filteredProducts =
+      selectedCategory === null
+        ? products 
+        : products.filter((product) => product.productCategory === selectedCategory);
+
+    if (filteredProducts.length === 0) {
+      return <p>No products found for this category.</p>;
+    }
+
+    return (
+      <div className="product-list">
+        {filteredProducts.map((product) => (
+          <div className="product-card" key={product.productId}>
+            <img
+              src={product.productImage}
+              alt={product.productName}
+              className="product-image"
             />
+            <h2 className="product-name">{product.productName}</h2>
+            <p>Type: {product.productCategory}</p>
+            <p>Price: Php {product.productPrice.toFixed(2)}</p>
+            <p>Description: {product.productDescription}</p>
+            <p>Stocks Left: {product.productQuantity}</p>
+            <button
+              className="add-to-cart-button"
+              onClick={() => addToCart(product)}
+            >
+              Add to Cart
+            </button>
           </div>
-        </div>
+        ))}
       </div>
-      </CartControllerProvider>
-  )
+    );
+  };
+
+  // Render the cart drawer
+  const renderCart = () => {
+    if (cart.length === 0) {
+      return <p>Your cart is empty.</p>;
+    }
+
+    return (
+      <div>
+        {cart.map((item) => (
+          <div key={item.productId} className="cart-item">
+            <p>{item.productName}</p>
+            <p>Qty: {item.quantity}</p>
+            <p>Price: Php {item.productPrice.toFixed(2)}</p>
+          </div>
+        ))}
+        <div className="cart-total">
+          <h3>Total: Php {calculateTotalPrice().toFixed(2)}</h3>
+        </div>
+        <button className="place-order-button" onClick={handlePlaceOrder}>
+          Place Order
+        </button>
+      </div>
+    );
+  };
+
+  return (
+    <div className="App">
+      <div className="header-container">
+        <header>
+          <h1>Farm to Table</h1>
+        </header>
+        <Header
+          menus={[{ name: "All Products", url: "#", id: null }, ...categories.map((category) => ({
+            name: category,
+            url: "#",
+            id: category,
+          }))]}
+          setSelectedCategory={setSelectedCategory}
+        />
+      </div>
+
+      <div className="sorting-controls">
+        <label htmlFor="sort-options">Sort by:</label>
+        <select
+          id="sort-options"
+          onChange={(e) => sortProducts(e.target.value)}
+          defaultValue=""
+        >
+          <option value="" disabled>Select criteria</option>
+          <option value="productName">Name</option>
+          <option value="productPrice">Price</option>
+          <option value="productQuantity">Quantity</option>
+        </select>
+        <button
+          onClick={() => sortProducts(sortConfig.key)}
+          disabled={!sortConfig.key}
+        >
+          Sort {sortConfig.direction === "asc" ? "Ascending" : "Descending"}
+        </button>
+      </div>
+
+      <div className="main-container">
+        <main>{renderProducts()}</main>
+        <aside className="cart-drawer">
+          <h2>Your Cart</h2>
+          {renderCart()}
+        </aside>
+      </div>
+    </div>
+  );
 }
 
-export default ShopPage
+export default ShopPage;
