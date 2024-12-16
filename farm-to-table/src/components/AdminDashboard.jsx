@@ -14,7 +14,9 @@ const AdminDashboard = () => {
         <div className="logo">
         <h1>Cultivate & Co.</h1>
         </div>
-        <h2>Hello, Admin!</h2>
+        <div className='admin-h2'>
+          <h2>Hello, Admin!</h2>
+        </div>
         <nav className="nav-links">
           <Link to="users" className="nav-link">User Management</Link>
           <Link to="products" className="nav-link">Product Listing</Link>
