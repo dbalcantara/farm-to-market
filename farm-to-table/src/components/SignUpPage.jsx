@@ -31,29 +31,15 @@ const SignUpPage = () => {
 
       const result = await response.json();
 
-    if (!result.ok) {
-      setMessage(result.message || 'An error occurred.')
-    } else {
+      if (!result.ok) {
+        setMessage(result.message || 'Signup Failed.');
+      } 
       setMessage('User signed up successfully!');
-      navigate('/');
-      ;
+      navigate('/'); 
+      
+    } catch (error) {
+      setMessage('Failed to connect to the server.');
     }
-  } catch (error) {
-    setMessage('Failed to connect to the server.');
-  } 
-  // finally {
-  //   setLoading(false);
-  // }
-//   if (!result.ok) {
-//     setMessage(result.message || 'Signup Failed.');
-//   }   
-//   setMessage('User signed up successfully!');
-//   navigate('/login'); 
-
-// } catch (error) {
-//   setMessage('Failed to connect to the server.');
-// };
-
     
   };
 
