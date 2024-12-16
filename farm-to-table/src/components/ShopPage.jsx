@@ -61,11 +61,13 @@ function ShopPage() {
 
 
   const sortProducts = (key) => {
+    if (!key) return;
+  
     const direction =
       sortConfig.key === key && sortConfig.direction === "asc" ? "desc" : "asc";
-
+  
     setSortConfig({ key, direction });
-
+  
     const sortedProducts = [...products].sort((a, b) => {
       if (a[key] < b[key]) {
         return direction === "asc" ? -1 : 1;
@@ -75,9 +77,10 @@ function ShopPage() {
       }
       return 0;
     });
-
+  
     setProducts(sortedProducts);
   };
+  
 
   const renderProducts = () => {
     if (error) {
@@ -165,7 +168,7 @@ function ShopPage() {
         />
       </div>
 
-      <div className="sorting-controls">
+      <div className="sorting">
         <label htmlFor="sort-options">Sort by:</label>
         <select
           id="sort-options"
@@ -195,5 +198,6 @@ function ShopPage() {
     </div>
   );
 }
+
 
 export default ShopPage;
