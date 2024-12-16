@@ -1,0 +1,153 @@
+/* Page Container */
+.orders-report-page {
+    padding: 20px;
+    background-color: #ffffff;
+    color: #333;
+  }
+  
+  /* Page Title */
+  .page-title {
+    color: #36b34a;
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+  
+  /* Tab Controls */
+  .tab-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .tab-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #333;
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .tab-button:hover {
+    background-color: #36b34a;
+    color: #fff;
+  }
+  
+  .tab-button.active {
+    background-color: #36b34a;
+    color: #fff;
+  }
+  
+  /* orders Summary */
+  .orders-summary {
+    margin-bottom: 20px;
+  }
+  
+  .section-title {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  
+  .total-orders {
+    font-size: 18px;
+    color: #36b34a;
+    font-weight: bold;
+  }
+  
+  /* Error Message */
+  .error-message {
+    color: red;
+    font-size: 16px;
+    text-align: center;
+  }
+  
+  /* Table Styling */
+  .orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+  }
+  
+  .orders-table thead {
+    background-color: #f4f4f4;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  .orders-table th,
+  .orders-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .orders-table tbody tr:hover {
+    background-color: #f9f9f9;
+  }
+  
+  .orders-table td {
+    font-size: 14px;
+    color: #555;
+  }
+  
+  /* Button Container */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  /* Confirm Order Button */
+  .btn-confirm {
+    padding: 5px 12px;
+    background-color: #36b34a;
+    color: #fff;
+    border: 1px solid #36b34a;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 14px;
+  }
+  
+  .btn-confirm:hover {
+    background-color: #2a923a;
+  }
+  
+  /* Cancel Order Button */
+  .btn-cancel {
+    padding: 5px 12px;
+    background-color: #ffffff;
+    color: #e74c3c;
+    border: 1px solid #e74c3c;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-size: 14px;
+  }
+  
+  .btn-cancel:hover {
+    background-color: #e74c3c;
+    color: #ffffff;
+  }
+  
+  /* Disabled Button */
+  .btn-disabled {
+    padding: 5px 12px;
+    background-color: #ccc;
+    color: #666;
+    border: none;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: not-allowed;
+  }
+  
+  /* Confirmed Status Text */
+  .status-confirmed {
+    color: #36b34a;
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
