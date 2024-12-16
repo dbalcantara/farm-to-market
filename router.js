@@ -44,8 +44,8 @@ const router = (app) => {
     app.post('/checkout', checkout);
     app.post('/cancel-order', cancelOrder);
 
-    router.post("/confirm-order", confirmOrder);
-    router.post("/cancelorder", cancelorder)
+    app.post("/confirm-order", confirmOrder);
+    app.post("/cancelorder", cancelorder)
 };
 
 export default router;
