@@ -1,18 +1,40 @@
+@font-face {
+  font-family: "Alte Haas Grotesk Bold";
+  src: url(../assets/ALTEHAASGROTESKBOLD.TTF) format("truetype");
+}
+
+@font-face {
+  font-family: "Alte Haas Grotesk Regular";
+  src: url(../assets/ALTEHAASGROTESKREGULAR.TTF) format("truetype");
+}
+
+@font-face {
+  font-family: "Mazius Display Extra Italic Bold";
+  src: url(../assets/MAZIUSDISPLAY-EXTRAITALICBOLD.OTF) format("truetype");
+}
+
 .admin-dashboard {
   display: flex;
   height: 100vh;
-  background-color: #f4f4f4;
+  background-image: url("../assets/1.png"); 
+  background-size: cover;
+  background-position: center;
 }
 
 /* Sidebar Styling */
 .sidebar {
   width: 20%;
-  background-color: #1b1b1b;
+  background: linear-gradient(180deg, rgba(62, 76, 52, 0.904) 0%, #e6c400c4 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 0px 100px 0px 100px;
+  border: 1px solid #e6c200;
   color: white;
   padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 70px 140px;
 }
 
 .logo img {
@@ -21,13 +43,34 @@
 }
 
 h2 {
-  margin-bottom: 30px;
+  font-size: 1.5rem;
+  color: #ffffff;
+  font-family: "Alte Haas Grotesk Regular";
+  overflow: hidden; /* Ensures the content is not revealed until the animation */
+  border-right: .15em solid orange; /* The typwriter cursor */
+  white-space: nowrap; /* Keeps the content on a single line */
+  margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+  letter-spacing: .0em; /* Adjust as needed */
+  animation: 
+    typing 1s steps(40, end),
+    blink-caret .50s step-end infinite;
+  margin-bottom: 40px;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 40% }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: orange; }
 }
 
 .nav-links {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 20px;
   width: 100%;
 }
 
@@ -36,60 +79,99 @@ h2 {
   text-decoration: none;
   font-size: 16px;
   padding: 10px;
-  background: #292929;
+  background: #303030;
+  display: flex;
+  justify-content: center;
   text-align: center;
-  border-radius: 5px;
+  align-items: center;
+  border-radius: 20px;
+  border: 1px solid #fbff07;
+  box-shadow: 0 4px 40px rgba(0, 0, 0, 0.377); 
+  height: 2rem; 
+  font-family: "Alte Haas Grotesk Regular";   
 }
 
 .nav-link:hover {
-  background: #36b34a;
+  background: #ac1f6b;
 }
 
 .logout {
+  font-size: 1.5rem;
   margin-top: auto;
-  color: #ff4c4c;
+  margin-bottom: 30px;
+  color: #000000;
   text-decoration: none;
   font-weight: bold;
+  font-family: "Alte Haas Grotesk Regular";
 }
 
 /* Main Content Styling */
 .main-content {
   flex: 1;
   padding: 20px;
+  margin-right: 140px;
 }
 
 h1 {
+  font-size: 3rem;
+  font-family: "Mazius Display Extra Italic Bold";
+  color: #ffd700;
   margin-bottom: 20px;
-  color: #36b34a;
+}
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers the content horizontally */
+  text-align: center;
+}
+
+.dashboard h3 {
+  font-size: 3rem;
+  font-family: "Mazius Display Extra Italic Bold";
+  color: #ffd700;
+  margin-bottom: 20px; 
 }
 
 .dashboard-cards {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 40px;
+  width: 100%; 
+  margin: 0 auto; 
 }
 
 .card {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: white;
-  border-radius: 10px;
+  justify-content: center;
+  width: 400px;
+  height: 300px;
+  background: rgba(29, 29, 29, 0.932);
   padding: 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 40px;
+  border: 1px solid #fbff07;
+  box-shadow: 0 4px 40px rgba(66, 126, 10, 0.555); 
   text-decoration: none;
   color: black;
+  transition: transform 0.3s, box-shadow 0.3s;
+  
 }
 
 .card img {
   width: 100%;
   border-radius: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  width: 90%;
+  opacity: 80%;
 }
 
 .card span {
+  color: rgba(255, 255, 255, 0.815);
   font-weight: bold;
-  font-size: 16px;
+  font-size: 20px;
+  font-family: "Alte Haas Grotesk Regular";   
 }
 
 .card:hover {
