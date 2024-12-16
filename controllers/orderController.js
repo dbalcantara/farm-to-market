@@ -69,3 +69,40 @@ export const showAllOrders = async (req, res) => {
     // fetch all orders from the database
     res.send(await Order.find({}));
 }
+
+// Confirm order controller
+export const confirmOrder = async (req, res) => {
+    const { transactionId } = req.body;
+    try {
+      const order = await Order.findOne({ transactionId });
+      if (!order) {
+        return res.status(404).send({ success: false, message: "Order not found" });
+      }
+      order.orderStatus = 1; // Set status to confirmed
+      await order.save();
+      res.send({ success: true, message: "Order confirmed successfully" });
+    } catch (error) {
+      res.status(500).send({ success: false, message: error.message });
+    }
+  };
+  
+  // Cancel order controller
+  export const cancelorder = async (req, res) => {
+    const { transactionId } = req.body;
+    try {
+      const order = await Order.findOne({ transactionId });
+      if (!order) {
+        return res.status(404).send({ success: false, message: "Order not found" });
+      }
+      if (order.orderStatus === 1) {
+        return res
+          .status(400)
+          .send({ success: false, message: "Cannot cancel a confirmed order" });
+      }
+      await order.deleteOne();
+      res.send({ success: true, message: "Order canceled successfully" });
+    } catch (error) {
+      res.status(500).send({ success: false, message: error.message });
+    }
+  };
+  
