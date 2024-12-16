@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; // For navigation
 import "./AdminSales.css";
 
 const AdminSales = () => {
   const [orders, setOrders] = useState([]);
   const [error, setError] = useState(null);
+  const navigate = useNavigate(); // For navigation
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -24,7 +26,13 @@ const AdminSales = () => {
 
   return (
     <div className="sales-report-page">
-      <h1 className="page-title">Sales Report</h1>
+      <div className="back-button" onClick={() => navigate("/dashboard")}>
+        &larr;
+      </div>
+
+      <div className="sales-page-title">
+        <h1>SALES REPORT</h1>
+      </div>
       <div className="tab-controls">
         <button className="tab-button active">Weekly</button>
         <button className="tab-button">Monthly</button>
