@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom"; // For navigation
 import './AdminUsers.css';
 
 const AdminUsers = () => {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
-
+  const navigate = useNavigate(); // For navigation
   // Fetch users from the backend
   useEffect(() => {
     const fetchUsers = async () => {
@@ -32,7 +33,13 @@ const AdminUsers = () => {
 
   return (
     <div className="users-page">
-      <h1 className="page-title">User Management</h1>
+      <div className="back-button" onClick={() => navigate("/dashboard")}>
+        &larr;
+      </div>
+
+      <div className="users-page-title">
+        <h1>USER MANAGEMENT</h1>
+      </div>
       <p className="user-count">Total Users: {users.length}</p>
       
       {error ? (

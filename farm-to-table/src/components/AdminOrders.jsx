@@ -74,12 +74,11 @@ const handleCancelOrder = async (transactionId) => {
 
   return (
     <div className="orders-report-page">
-      {/* Back Button */}
       <div className="back-button" onClick={() => navigate("/dashboard")}>
         &larr;
       </div>
 
-      <div className="page-title">
+      <div className="orders-page-title">
         <h1>CONFIRM ORDER</h1>
       </div>
       <table className="orders-table">
