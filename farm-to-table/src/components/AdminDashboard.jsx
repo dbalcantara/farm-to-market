@@ -23,7 +23,7 @@ const AdminDashboard = () => {
           <Link to="orders" className="nav-link">Order Fulfillment</Link>
           <Link to="sales" className="nav-link">Sales Report</Link>
         </nav>
-        <Link to="logout" className="logout">LOGOUT</Link>
+        <Link to="/" className="logout">LOGOUT</Link>
       </aside>
 
       {/* Main Content */}

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; // For navigation
 import "./AdminOrders.css";
 
 const AdminOrders = () => {
   const [orders, setOrders] = useState([]); // State for fetched orders
   const [error, setError] = useState(null); // State for errors
+  const navigate = useNavigate(); // For navigation
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -72,8 +74,14 @@ const handleCancelOrder = async (transactionId) => {
 
   return (
     <div className="orders-report-page">
-      <h1 className="page-title">Confirm Order</h1>
+      {/* Back Button */}
+      <div className="back-button" onClick={() => navigate("/dashboard")}>
+        &larr;
+      </div>
 
+      <div className="page-title">
+        <h1>CONFIRM ORDER</h1>
+      </div>
       <table className="orders-table">
         <thead>
           <tr>
