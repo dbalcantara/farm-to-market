@@ -3,12 +3,12 @@ import Header from "./ShopHeader";
 import "./ShopPage.css";
 
 function ShopPage() {
-  const [selectedCategory, setSelectedCategory] = useState(null); 
-  const [products, setProducts] = useState([]); 
-  const [categories, setCategories] = useState([]); 
-  const [cart, setCart] = useState([]); 
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [cart, setCart] = useState([]);
   const [error, setError] = useState(null);
-  const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" }); 
+  const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" });
 
   useEffect(() => {
     const fetchProductsAndCategories = async () => {
@@ -32,7 +32,6 @@ function ShopPage() {
   }, []);
 
   // Add a product to the cart
-  // This can be transferred to ShopCart
   const addToCart = (product) => {
     const existingProduct = cart.find((item) => item.productId === product.productId);
 
@@ -49,25 +48,40 @@ function ShopPage() {
     }
   };
 
- 
+  // Remove a product from the cart
+  const removeFromCart = (productId) => {
+    setCart(cart.filter((item) => item.productId !== productId));
+  };
+
+  // Update stock quantities after checkout
+  const updateStockAfterCheckout = () => {
+    const updatedProducts = [...products];
+    cart.forEach((item) => {
+      const productIndex = updatedProducts.findIndex((product) => product.productId === item.productId);
+      if (productIndex !== -1) {
+        updatedProducts[productIndex].productQuantity -= item.quantity; // Deduct the quantity from stock
+      }
+    });
+    setProducts(updatedProducts);
+  };
+
   const calculateTotalPrice = () =>
     cart.reduce((total, item) => total + item.productPrice * item.quantity, 0);
 
-
   const handlePlaceOrder = () => {
     alert("Order placed successfully!");
-    setCart([]); 
+    updateStockAfterCheckout(); // Update stock after checkout
+    setCart([]); // Clear cart
   };
-
 
   const sortProducts = (key) => {
     if (!key) return;
-  
+
     const direction =
       sortConfig.key === key && sortConfig.direction === "asc" ? "desc" : "asc";
-  
+
     setSortConfig({ key, direction });
-  
+
     const sortedProducts = [...products].sort((a, b) => {
       if (a[key] < b[key]) {
         return direction === "asc" ? -1 : 1;
@@ -77,10 +91,9 @@ function ShopPage() {
       }
       return 0;
     });
-  
+
     setProducts(sortedProducts);
   };
-  
 
   const renderProducts = () => {
     if (error) {
@@ -88,13 +101,12 @@ function ShopPage() {
     }
 
     if (products.length === 0) {
-      return <p>Loading products...</p>; 
+      return <p>Loading products...</p>;
     }
-
 
     const filteredProducts =
       selectedCategory === null
-        ? products 
+        ? products
         : products.filter((product) => product.productCategory === selectedCategory);
 
     if (filteredProducts.length === 0) {
@@ -118,6 +130,7 @@ function ShopPage() {
             <button
               className="add-to-cart-button"
               onClick={() => addToCart(product)}
+              disabled={product.productQuantity === 0}
             >
               Add to Cart
             </button>
@@ -132,25 +145,45 @@ function ShopPage() {
     if (cart.length === 0) {
       return <p>Your cart is empty.</p>;
     }
-
+  
     return (
-      <div>
-        {cart.map((item) => (
-          <div key={item.productId} className="cart-item">
-            <p>{item.productName}</p>
-            <p>Qty: {item.quantity}</p>
-            <p>Price: Php {item.productPrice.toFixed(2)}</p>
-          </div>
-        ))}
-        <div className="cart-total">
+      <div className="cart-container">
+        <table className="cart-table">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Quantity</th>
+              <th>Total (Php)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {cart.map((item) => (
+              <tr key={item.productId}>
+                <td>{item.productName}</td>
+                <td>{item.quantity}</td>
+                <td>{(item.productPrice * item.quantity).toFixed(2)}</td>
+                <td>
+                  <button
+                    className="remove-button"
+                    onClick={() => removeFromCart(item.productId)}
+                  >
+                    Remove
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div className="cart-summary">
           <h3>Total: Php {calculateTotalPrice().toFixed(2)}</h3>
+          <button className="place-order-button" onClick={handlePlaceOrder}>
+            Place Order
+          </button>
         </div>
-        <button className="place-order-button" onClick={handlePlaceOrder}>
-          Place Order
-        </button>
       </div>
     );
   };
+  
 
   return (
     <div className="App">
@@ -167,7 +200,6 @@ function ShopPage() {
           setSelectedCategory={setSelectedCategory}
         />
       </div>
-
       <div className="sorting">
         <label htmlFor="sort-options">Sort by:</label>
         <select
@@ -187,7 +219,6 @@ function ShopPage() {
           Sort {sortConfig.direction === "asc" ? "Ascending" : "Descending"}
         </button>
       </div>
-
       <div className="main-container">
         <main>{renderProducts()}</main>
         <aside className="cart-drawer">
@@ -198,6 +229,5 @@ function ShopPage() {
     </div>
   );
 }
-
 
 export default ShopPage;
