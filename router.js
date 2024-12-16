@@ -1,6 +1,6 @@
 import {addUser, getUserbyEmail, updateUserDetails, deleteUser, showAllUser} from "./controllers/authController.js";
 import {addNewProduct, getProductByID, updateProductDetails, deleteProduct, showAllProducts} from "./controllers/productController.js";
-import {addOrder, getOrderByTransactionId, updateOrder, deleteOrder, showAllOrderFromAUser, showAllOrders} from "./controllers/orderController.js";
+import {addOrder, getOrderByTransactionId, updateOrder, deleteOrder, showAllOrderFromAUser, showAllOrders, confirmOrder, cancelorder} from "./controllers/orderController.js";
 import {signup, login, logout, addToCart, removeFromCart, checkout, cancelOrder} from "./actions/customer.js";
 
 const router = (app) => {
@@ -43,6 +43,9 @@ const router = (app) => {
     app.post('/remove-from-cart', removeFromCart);
     app.post('/checkout', checkout);
     app.post('/cancel-order', cancelOrder);
+
+    router.post("/confirm-order", confirmOrder);
+    router.post("/cancelorder", cancelorder)
 };
 
 export default router;
