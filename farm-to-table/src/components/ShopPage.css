@@ -1,10 +1,11 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    background-color: #fff;
-    color: #000;
+
+
+.App {
+    width: 100%;
+    background-color: #557142;
+    background-image: url("../assets/1.png"); 
+    background-size: cover;
+    background-position: center;
 }
 
 .header-container {
@@ -12,7 +13,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
-    background-color: #000;
+    background-color: #4D774E;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); 
 }
 
@@ -22,7 +23,7 @@ header {
 
 header h1 {
     margin: 0;
-    color: #fff;
+    color: #ffffff;
     font-size: 1.5rem;
 }
 
@@ -31,7 +32,8 @@ nav ul {
     list-style: none;
     padding: 0;
     margin: 0;
-    color: #fff;
+    color: #ffffff;
+    
 }
 
 nav ul li {
@@ -58,15 +60,76 @@ nav ul li.active {
 .main-container {
     display: flex;
     padding: 20px;
+    
 }
 
 main {
+    border-radius: 30px;
+    background-color: #557142;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: row;
+    gap: 20px;
     padding: 20px;
-    flex: 3;
+    width: 100%; 
+    margin: 0 auto; 
+    box-sizing: border-box; 
 }
+
+.product-list {
+    border-radius: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+    gap: 20px; 
+    padding: 20px;
+    width: 100%; 
+    box-sizing: border-box;
+  }
+  
+
+  .product-card {
+    border-radius: 30px;
+    border: 1px solid #fbff07;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 40px rgba(66, 126, 10, 0.555); 
+    background: rgba(70, 79, 44, 0.932);
+    transition: transform 0.2s ease-in-out;
+    text-align: center;
+    color: #dee2e6;
+
+  }
+  
+  .product-card img {
+    max-width: 85%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+  
+  .product-card button {
+    background-color: #ffd700;
+    color: #333;
+    border: 1px solid #000000;
+    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.349); 
+    padding: 0.75rem;
+    border-radius: 30px;
+    text-transform: uppercase;
+    font-size: 1.1rem;
+    cursor: pointer;
+    width: 85%; 
+    transition: background-color 0.3s;
+    font-family: "Alte Haas Grotesk Bold", sans-serif;
+    display: block; 
+    margin: 1rem auto; 
+    text-align: center; 
+    margin-top: 70px;
+  }
+  
+  .product-card button:hover {
+    background-color: #f2ff00;
+  }
+  
 
 .item-list {
     display: flex;
@@ -91,16 +154,16 @@ main {
     max-width: 100%;
     height: auto;
     border-radius: 5px;
-    margin-bottom: 10px;
 }
 
 .item-card h2 {
+margin-bottom: 10px;
     margin-top: 0;
     font-size: 1.2em;
 }
 
 .item-card p {
-    margin: 10px 0 0 0;
+    margin: 10px 10px 10px 10px;
     font-size: 1em;
 }
 
@@ -113,8 +176,8 @@ main {
     cursor: pointer;
     border-radius: 5px;
 }
-
 .item-card button:hover {
+
     background-color: #333;
 }
 
@@ -122,23 +185,159 @@ main {
     padding: 20px;
     flex: 1;
     border-left: 1px solid #000;
-    background-color: #f9f9f9;
+    background-color: #9DC88D;
+    backdrop-filter: blur(10px);    
+    border-radius: 30px;
 }
+
+.cart-drawer {
+    background: #4D774E;
+    margin-right: 10px;
+    margin-left: 10px;
+    padding: 20px;
+    width: 380px;
+    height: 100%;
+    overflow-y: auto;
+    box-shadow: -3px 0 5px rgba(0, 0, 0, 0.1);
+    border-radius: 30px;
+
+  }
+  
+  .cart-drawer h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    text-align: center;
+    color: white;
+  }
+  
+  .cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #dee2e6;
+    padding: 10px 0;
+    margin-bottom: 10px;
+  }
+  
+  .cart-item:last-child {
+    border-bottom: none;
+  }
+  
+  .cart-item p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: white;;
+  }
+  
+  .cart-item .cart-item-name {
+    flex: 2;
+  }
+  
+  .cart-item .cart-item-quantity {
+    flex: 1;
+    text-align: center;
+  }
+  
+  .cart-item .cart-item-price {
+    flex: 1;
+    text-align: right;
+  }
+  
+  .cart-total {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    text-align: right;
+  }
+  
+  .place-order-button {
+    width: 100%;
+    padding: 12px 20px;
+    border-color: #218838;
+    background-color: #ffd700;
+    color:#144f21;
+    border: none;
+    border-radius: 30px;
+    text-transform: uppercase;
+    font-size: 1.1rem;  
+    font-weight: bolder;  
+    cursor: pointer;
+    margin-top: 15px;
+  }
+  
+  .place-order-button:hover {
+    background-color: #f2ff00;
+  }
+
 
 .cart h2 {
     margin-top: 0;
 }
 
 .remove-button {
-    margin-top: 10px;
-    padding: 10px 20px;
     border: none;
-    background-color: #000;
-    color: #fff;
+    background-color: white;
+    color: #F1B24A;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 30px;
+    font-weight: bolder;
 }
 
 .remove-button:hover {
     background-color: #333;
 }
+
+.sorting {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #164A41;
+    border: 1px solid #dee2e6;
+    border-radius: 30px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 25%;
+    padding-left: 35px;
+    margin-left: 30px;
+  }
+  
+  .sorting label {
+    font-size: 1rem;
+    color: white;
+    font-weight: bold;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+  }
+  
+  .sorting select {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    border: 1px solid #ced4da;
+    border-radius: 30px;
+    background-color: #F1B24A;
+    color: white   ;
+    cursor: pointer;
+  }
+  
+  .sorting button {
+    padding: 5px 15px;
+    font-size: 0.9rem;
+    color: white;
+    background-color: #9DC88D;
+    border: 1px solid #fffb00;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .sorting-controls button:hover {
+    background-color: #f2ff00;
+  }
+  
+  .sorting-controls button:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+  }
+  

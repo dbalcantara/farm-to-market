@@ -35,7 +35,7 @@ const SignUpPage = () => {
         setMessage(result.message || 'Signup Failed.');
       } 
       setMessage('User signed up successfully!');
-      navigate('/login'); 
+      navigate('/'); 
       
     } catch (error) {
       setMessage('Failed to connect to the server.');

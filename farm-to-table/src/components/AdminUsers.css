@@ -1,22 +1,58 @@
+@font-face {
+  font-family: "Alte Haas Grotesk Bold";
+  src: url(../assets/ALTEHAASGROTESKBOLD.TTF) format("truetype");
+}
+
+@font-face {
+  font-family: "Alte Haas Grotesk Regular";
+  src: url(../assets/ALTEHAASGROTESKREGULAR.TTF) format("truetype");
+}
+
+@font-face {
+  font-family: "Mazius Display Extra Italic Bold";
+  src: url(../assets/MAZIUSDISPLAY-EXTRAITALICBOLD.OTF) format("truetype");
+}
+
 /* Page Container */
 .users-page {
   padding: 20px;
-  background-color: #ffffff;
-  color: #333;
+  height: 100vh;
+  background-image: url("../assets/1.png"); 
+  background-size: cover;
+  background-position: center;
 }
 
 /* Page Title */
-.page-title {
-  color: #36b34a;
+.users-page-title {
+  background-color: rgba(62, 76, 52, 0.76);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 70px 70px 0px 0px;
+  border: 1px solid #e6c200;
+  height: 80px;
+  align-content: center;
   font-size: 28px;
   margin-bottom: 10px;
+  font-family: "Alte Haas Grotesk Bold";
+}
+
+
+.users-page-title h1{
+  align-content: center;
+  padding: 10px auto;
+  text-align: center;
+  color: #ffffff;
+  font-size: 28px;
+  margin-bottom: 10px;
+  font-family: "Alte Haas Grotesk Bold";
 }
 
 /* User Count */
 .user-count {
   font-size: 16px;
   margin-bottom: 20px;
-  color: #666;
+  color: #000000;
+  font-family: "Alte Haas Grotesk Bold";
 }
 
 /* Error Message */
@@ -30,11 +66,12 @@
   width: 100%;
   border-collapse: collapse;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
 }
 
-.user-table thead {
-  background-color: #f4f4f4;
-  color: #333;
+.user-table thead th{
+  background-color: #ffd900; /* Header background color */
+  color: #000000; /* Header text color */
   font-weight: bold;
 }
 
@@ -42,7 +79,8 @@
 .user-table td {
   padding: 12px 15px;
   text-align: left;
-  border-bottom: 1px solid #ddd;
+  background-color: rgba(62, 76, 52, 0.76);
+  border-bottom: 1px solid #ffffff9c;
 }
 
 .user-table tbody tr:hover {
@@ -51,5 +89,5 @@
 
 .user-table td {
   font-size: 14px;
-  color: #555;
+  color: #ffffff;
 }
