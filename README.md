@@ -1,4 +1,4 @@
-# Farm-To-Market
+# Farm-To-Table
 
 ## Details
 An e-commerce website that facilitates transactions between farmers and customers directly. 
